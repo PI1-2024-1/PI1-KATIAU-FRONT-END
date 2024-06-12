@@ -1,5 +1,5 @@
 import { Box } from '@chakra-ui/react';
-import { Graficos } from './pages/Graficos';
+import { Body } from './components/Body';
 import { Header } from './components/Header';
 import './App.css';
 
@@ -7,7 +7,7 @@ function App() {
   return (
       <Box>
         <Header />
-        <Graficos />
+        <Body />
       </Box>
   );
 }
