@@ -1,7 +1,18 @@
 import { Box, Text, Select, Divider, Button } from '@chakra-ui/react';
-
+import { useState } from 'react';
 
 export function SideBar(){
+
+    const [percurso, setPercurso] = useState(false)
+
+    console.log(percurso)
+
+    const inicializarPercurso = () => {
+        console.log(percurso);
+        setPercurso(prevPercurso => !prevPercurso);
+    };
+    
+
     return(
     <Box>
         <Box p={5} display={'flex'} alignItems={'center'} flexDirection={'column'}>
@@ -9,8 +20,18 @@ export function SideBar(){
         </Box>
         <Divider opacity={1}/>
         <Box p={5} display={'flex'} alignItems={'center'} flexDirection={'column'} >
-            <Text fontSize='xl' marginRight={'20px'}>Iniciar carrinho</Text>
-            <Button colorScheme='blue' size='lg' marginTop={'20px'}>Iniciar percurso</Button>
+            {percurso ? 
+            <Box>
+                <Text fontSize='xl' marginRight={'20px'}>Parar carrinho</Text>
+                <Button colorScheme='red' size='lg' marginTop={'20px'} onClick={inicializarPercurso}>Parar percurso</Button>
+            </Box>
+            : 
+            <Box>
+                <Text fontSize='xl' marginRight={'20px'}>Iniciar carrinho</Text>
+                <Button colorScheme='blue' size='lg' marginTop={'20px'} onClick={inicializarPercurso}>Iniciar percurso</Button>
+            </Box>
+            }
+            
         </Box>
         <Divider opacity={1}/>
         <Box p={5} display={'flex'} alignItems={'flex-start'} flexDirection={'column'}>
