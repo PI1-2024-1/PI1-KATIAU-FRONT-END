@@ -1,8 +1,27 @@
 import { Grid, GridItem } from "@chakra-ui/react";
 import { SideBar } from "./SideBar";
 import { GraficoVelocidade } from "./GraficoVelocidade";
+import { getPercursos } from "../api/getPercursos";
+import { useEffect, useState } from "react";
 
 export function Body() {
+    
+    const [percursos, setPercursos] = useState([]);
+    
+    useEffect(() => {
+        async function mostrarPercursos() {
+            try { 
+                const percursos = await getPercursos();
+                setPercursos(percursos);
+            } catch (error) {
+                console.error('Erro ao buscar os dados da API:', error);
+                throw error;
+            }
+        }
+        console.log(mostrarPercursos())
+    }, []);
+
+    
     return (
         <Grid
         h='900px'
@@ -11,7 +30,7 @@ export function Body() {
         gap={4}
         >
             <GridItem rowSpan={2} colSpan={1} shadow='md' borderWidth='1px' marginLeft={'10px'} marginTop={'10px'}>
-                <SideBar/>
+                <SideBar percursos={percursos}/>
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
                 <GraficoVelocidade/>
