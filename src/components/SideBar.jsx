@@ -1,13 +1,20 @@
 import { Box, Text, Select, Divider, Button } from '@chakra-ui/react';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import { postPercurso } from '../api/postPercurso';
 
 export function SideBar({percursos}){
 
     const [corrida, setCorrida] = useState(false)
     const [percursoSelecionado, setPercursoSelecionado] = useState(null);
 
-    const inicializarCorrida = () => {
+    const inicializarCorrida = async () => {
+        await postPercurso();
+        setCorrida(prevPercurso => !prevPercurso);
+    };
+
+    const finalizarCorrida = async () => {
+        // await postPercurso();
         setCorrida(prevPercurso => !prevPercurso);
     };
 
@@ -15,6 +22,7 @@ export function SideBar({percursos}){
         const idPercurso = parseInt(event.target.value);
         const percusoEscolhido = percursos.find(percurso => percurso.idPercurso === idPercurso);
         setPercursoSelecionado(percusoEscolhido);
+        localStorage.setItem('percursoSelecionado', JSON.stringify(percusoEscolhido));
     };
 
     return(
@@ -27,7 +35,7 @@ export function SideBar({percursos}){
             {corrida ? 
             <Box>
                 <Text fontSize='xl' marginRight={'20px'}>Parar carrinho</Text>
-                <Button colorScheme='red' size='lg' marginTop={'20px'} onClick={inicializarCorrida}>Parar percurso</Button>
+                <Button colorScheme='red' size='lg' marginTop={'20px'} onClick={finalizarCorrida}>Parar percurso</Button>
             </Box>
             : 
             <Box>

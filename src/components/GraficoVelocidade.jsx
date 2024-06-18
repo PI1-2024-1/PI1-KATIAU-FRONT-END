@@ -1,6 +1,7 @@
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 import { Box, Text } from '@chakra-ui/react';
+import PropTypes from 'prop-types';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
@@ -30,7 +31,8 @@ const options = {
   },
 };
 
-export function GraficoVelocidade() {
+export function GraficoVelocidade({percursoSelecionado}) {
+  console.log(percursoSelecionado);
   return (
     <Box>
       <Text fontSize='xl' as='b' >Grafico de velocidade</Text>
@@ -38,3 +40,7 @@ export function GraficoVelocidade() {
     </Box>
   );
 }
+
+GraficoVelocidade.propTypes = {
+  percursoSelecionado: PropTypes.arrayOf(PropTypes.object).isRequired
+};

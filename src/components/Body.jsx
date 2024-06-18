@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 export function Body() {
     
     const [percursos, setPercursos] = useState([]);
+    const [percursoSelecionado, setPercursoSelecionado] = useState(null);
     
     useEffect(() => {
         async function mostrarPercursos() {
@@ -18,9 +19,21 @@ export function Body() {
                 throw error;
             }
         }
-        console.log(mostrarPercursos())
+        mostrarPercursos();
+
+        const percursoSalvo = localStorage.getItem('percursoSelecionado');
+        if (percursoSalvo) {
+            setPercursoSelecionado(JSON.parse(percursoSalvo));
+        }
+
+        // const intervalId = setInterval(() => {
+        //     mostrarPercursos(); // Chama a função a cada 10 segundos
+        // }, 10000);
+
+        // return () => clearInterval(intervalId); 
     }, []);
 
+    console.log(percursoSelecionado);
     
     return (
         <Grid
@@ -33,7 +46,7 @@ export function Body() {
                 <SideBar percursos={percursos}/>
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
-                <GraficoVelocidade/>
+                <GraficoVelocidade percursoSelecionado={percursoSelecionado}/>
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' bg='papayawhip' marginTop={'10px'} marginRight={'10px'} />
             <GridItem colSpan={2} shadow='md' borderWidth='1px' bg='papayawhip' marginTop={'10px'} marginRight={'10px'} />
