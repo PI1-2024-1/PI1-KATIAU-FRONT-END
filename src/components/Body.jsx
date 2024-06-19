@@ -4,6 +4,7 @@ import { GraficoVelocidade } from "./GraficoVelocidade";
 import { getPercursos } from "../api/getPercursos";
 import { useEffect, useState, useContext } from "react";
 import { MyContext } from "../context/context";
+import { GraficoDistancia } from "./GraficoDistancia";
 
 export function Body() {
     const [percursos, setPercursos] = useState([]);
@@ -42,7 +43,9 @@ export function Body() {
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
                 <GraficoVelocidade percursoSelecionado={percursoSelecionado} />
             </GridItem>
-            <GridItem colSpan={2} shadow='md' borderWidth='1px' bg='papayawhip' marginTop={'10px'} marginRight={'10px'} />
+            <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
+                <GraficoDistancia percursoSelecionado={percursoSelecionado} />
+            </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' bg='papayawhip' marginTop={'10px'} marginRight={'10px'} />
             <GridItem colSpan={2} shadow='md' borderWidth='1px' bg='papayawhip' marginTop={'10px'} marginRight={'10px'} />
         </Grid>
