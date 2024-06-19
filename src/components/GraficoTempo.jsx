@@ -17,18 +17,18 @@ const options = {
     },
     title: {
       display: true,
-      text: 'Gráfico de velocidade',
+      text: '',
     },
   },
 };
 
-export function GraficoVelocidade({ percursoSelecionado }) {
+export function GraficoTempo({ percursoSelecionado }) {
 
   const [graficoData, setGraficoData] = useState({
     labels: [],
     datasets: [
       {
-        label: 'Velocidade',
+        label: 'Tempo',
         data: [],
         fill: false,
         backgroundColor: 'rgba(0,0,192,0.2)',
@@ -45,14 +45,14 @@ export function GraficoVelocidade({ percursoSelecionado }) {
           console.log('Telemetrias', telemetrias);
           
           // Atualize os dados do gráfico aqui
-          const newLabels = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
-          const newData = telemetrias.map(telemetria => telemetria.velocidade);
+          const newLabels = telemetrias.map(telemetria => telemetria.distTotal ); // Ajuste conforme a estrutura dos dados da API
+          const newData = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss')); // Ajuste conforme a estrutura dos dados da API
 
           setGraficoData({
             labels: newLabels,
             datasets: [
               {
-                label: 'Velocidade',
+                label: 'Tempo em mm:ss',
                 data: newData,
                 fill: false,
                 backgroundColor: 'rgba(0,0,192,0.2)',
@@ -64,20 +64,6 @@ export function GraficoVelocidade({ percursoSelecionado }) {
           console.error('Erro ao buscar os dados da API:', error);
         }
       }
-      else {
-        setGraficoData({
-          labels: [],
-          datasets: [
-            {
-              label: 'Velocidade',
-              data: [],
-              fill: false,
-              backgroundColor: 'rgba(0,0,192,0.2)',
-              borderColor: 'rgba(0,0,192,1)',
-            },
-          ],
-        });
-      }
     };
 
     getTelemetria();
@@ -85,12 +71,12 @@ export function GraficoVelocidade({ percursoSelecionado }) {
 
   return (
     <Box>
-      <Text fontSize='xl' as='b'>Grafico de velocidade</Text>
+      <Text fontSize='xl' as='b'>Tempo pela distância</Text>
       <Line data={graficoData} options={options} />
     </Box>
   );
 }
 
-GraficoVelocidade.propTypes = {
+GraficoTempo.propTypes = {
   percursoSelecionado: PropTypes.object
 };
