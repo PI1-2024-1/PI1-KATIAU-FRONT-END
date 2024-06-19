@@ -17,7 +17,7 @@ const options = {
     },
     title: {
       display: true,
-      text: '',
+      text: 'Gráfico de velocidade',
     },
   },
 };
@@ -45,8 +45,8 @@ export function GraficoVelocidade({ percursoSelecionado }) {
           console.log('Telemetrias', telemetrias);
           
           // Atualize os dados do gráfico aqui
-          const newLabels = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss')); // Ajuste conforme a estrutura dos dados da API
-          const newData = telemetrias.map(telemetria => telemetria.velocidade); // Ajuste conforme a estrutura dos dados da API
+          const newLabels = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
+          const newData = telemetrias.map(telemetria => telemetria.velocidade);
 
           setGraficoData({
             labels: newLabels,
@@ -63,6 +63,20 @@ export function GraficoVelocidade({ percursoSelecionado }) {
         } catch (error) {
           console.error('Erro ao buscar os dados da API:', error);
         }
+      }
+      else {
+        setGraficoData({
+          labels: [],
+          datasets: [
+            {
+              label: 'Velocidade',
+              data: [],
+              fill: false,
+              backgroundColor: 'rgba(0,0,192,0.2)',
+              borderColor: 'rgba(0,0,192,1)',
+            },
+          ],
+        });
       }
     };
 
