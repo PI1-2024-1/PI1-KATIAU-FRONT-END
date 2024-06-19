@@ -1,12 +1,14 @@
 import { Box, Text, Select, Divider, Button } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { postPercurso } from '../api/postPercurso';
+import { MyContext } from '../context/context';
 
 export function SideBar({percursos}){
 
     const [corrida, setCorrida] = useState(false)
     const [percursoSelecionado, setPercursoSelecionado] = useState(null);
+    const { sharedState, setSharedState } = useContext(MyContext);
 
     const inicializarCorrida = async () => {
         await postPercurso();
@@ -22,8 +24,10 @@ export function SideBar({percursos}){
         const idPercurso = parseInt(event.target.value);
         const percusoEscolhido = percursos.find(percurso => percurso.idPercurso === idPercurso);
         setPercursoSelecionado(percusoEscolhido);
-        localStorage.setItem('percursoSelecionado', JSON.stringify(percusoEscolhido));
+        setSharedState(percusoEscolhido);
     };
+
+    console.log(sharedState);
 
     return(
     <Box>
