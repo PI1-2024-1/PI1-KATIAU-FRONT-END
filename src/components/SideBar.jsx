@@ -64,7 +64,7 @@ export function SideBar({percursos}){
             {percursoSelecionado ?
                 <Box display={'flex'} alignItems={'flex-start'} flexDirection={'column'}>
                     <Text fontSize='lg' marginTop={'20px'}>Distância percorrida: {percursoSelecionado.distPercorrida} km</Text>
-                    <Text fontSize='lg'>Tempo de percurso: {percursoSelecionado.tempoDecorrido} min</Text>
+                    <Text fontSize='lg'>Tempo Total: {percursoSelecionado.tempoDecorrido} min</Text>
                     <Text fontSize='lg'>Velocidade: 0 km/h</Text>
                 </Box>
                 : <Text fontSize='lg' marginTop={'20px'}>Selecione um percurso para visualizar os dados</Text>
