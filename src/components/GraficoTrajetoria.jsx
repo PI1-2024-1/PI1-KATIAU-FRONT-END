@@ -58,7 +58,7 @@ export function GraficoTrajetoria({ percursoSelecionado }) {
         borderColor: 'rgba(0, 128, 0, 1)', // verde
         tension: 0.1,
         pointRadius: 6, // Tamanho dos pontos
-        pointBackgroundColor: 'rgba(0, 128, 0, 1)', 
+        pointBackgroundColor: 'rgba(0, 128, 0, 1)',
       },
     ],
   });
