@@ -17,7 +17,7 @@ const options = {
     },
     title: {
       display: true,
-      text: 'Gráfico de velocidade',
+      text: 'Velocidade do carrinho pelo tempo',
     },
   },
 };

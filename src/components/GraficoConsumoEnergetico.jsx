@@ -11,18 +11,19 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 
 const options = {
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
     legend: {
       position: 'top',
     },
     title: {
       display: true,
-      text: 'Acelaração do carrinho pelo tempo',
+      text: 'Gráfico de Consumo energético',
     },
   },
 };
 
-export function GraficoAceleracao({ percursoSelecionado }) {
+export function GraficoConsumoEnergetico({ percursoSelecionado }) {
 
   const [graficoData, setGraficoData] = useState({
     labels: [],
@@ -46,13 +47,13 @@ export function GraficoAceleracao({ percursoSelecionado }) {
           
           // Atualize os dados do gráfico aqui
           const newLabels = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
-          const newData = telemetrias.map(telemetria => telemetria.aceleracao);
+          const newData = telemetrias.map(telemetria => telemetria.energia);
 
           setGraficoData({
             labels: newLabels,
             datasets: [
               {
-                label: 'Aceleração',
+                label: 'Consumo energético',
                 data: newData,
                 fill: false,
                 backgroundColor: 'rgba(192, 0, 0, 0.2)',
@@ -69,7 +70,7 @@ export function GraficoAceleracao({ percursoSelecionado }) {
           labels: [],
           datasets: [
             {
-              label: 'Aceleração',
+              label: 'Consumo energético',
               data: [],
               fill: false,
               backgroundColor: 'rgba(192, 0, 0, 0.2)',
@@ -84,13 +85,13 @@ export function GraficoAceleracao({ percursoSelecionado }) {
   }, [percursoSelecionado]);
 
   return (
-    <Box>
-      <Text fontSize='xl' as='b'>Gráfico da Aceleração</Text>
+    <Box width="100%" height="400px">
+      {/* <Text fontSize='xl' as='b'>Gráfico da Consumo energético</Text> */}
       <Line data={graficoData} options={options} />
     </Box>
   );
 }
 
-GraficoAceleracao.propTypes = {
+GraficoConsumoEnergetico.propTypes = {
   percursoSelecionado: PropTypes.object
 };

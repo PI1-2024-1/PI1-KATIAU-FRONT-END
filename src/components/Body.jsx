@@ -4,6 +4,7 @@ import { GraficoVelocidade } from "./GraficoVelocidade";
 import { GraficoTrajetoria } from "./GraficoTrajetoria";
 import { GraficoDistancia } from "./GraficoDistancia";
 import { GraficoAceleracao } from "./GraficoAceleracao";
+import { GraficoConsumoEnergetico } from "./GraficoConsumoEnergetico";
 import { getPercursos } from "../api/getPercursos";
 import { useEffect, useState, useContext } from "react";
 import { MyContext } from "../context/context";
@@ -35,11 +36,11 @@ export function Body() {
     return (
         <Grid
             h='900px'
-            templateRows='repeat(2, 1fr)'
+            templateRows='repeat(4, 1fr)'
             templateColumns='repeat(5, 1fr)'
             gap={4}
         >
-            <GridItem rowSpan={2} colSpan={1} shadow='md' borderWidth='1px' marginLeft={'10px'} marginTop={'10px'}>
+            <GridItem rowSpan={3} colSpan={1} shadow='md' borderWidth='1px' marginLeft={'10px'} marginTop={'10px'}>
                 <SideBar percursos={percursos} />
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
@@ -51,10 +52,12 @@ export function Body() {
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
               <GraficoTrajetoria percursoSelecionado={percursoSelecionado} />
             </GridItem>
-            <GridItem colSpan={2} shadow='md' borderWidth='1px' bg='papayawhip' marginTop={'10px'} marginRight={'10px'}>
+            <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
               <GraficoDistancia percursoSelecionado={percursoSelecionado} />   
             </GridItem>
-            <GridItem colSpan={2} shadow='md' borderWidth='1px' bg='papayawhip' marginTop={'10px'} marginRight={'10px'} />
+            <GridItem  colSpan={4} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'} marginBottom={'10px'}>
+                <GraficoConsumoEnergetico percursoSelecionado={percursoSelecionado} />
+            </GridItem>
         </Grid>
     );
 }

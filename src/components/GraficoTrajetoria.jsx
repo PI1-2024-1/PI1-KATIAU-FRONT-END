@@ -16,7 +16,7 @@ const options = {
     },
     title: {
       display: true,
-      text: 'Gráfico de Percurso',
+      text: 'Trajetória do percurso realizada pelo carrinho',
     },
   },
   scales: {

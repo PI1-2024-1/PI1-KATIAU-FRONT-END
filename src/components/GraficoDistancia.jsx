@@ -17,7 +17,7 @@ const options = {
     },
     title: {
       display: true,
-      text: '',
+      text: 'Distância Percorrida pelo carrinho em função do tempo',
     },
   },
 };
