@@ -17,22 +17,22 @@ const options = {
     },
     title: {
       display: true,
-      text: '',
+      text: 'medição realizada pelo sensor de rotação da roda',
     },
   },
 };
 
-export function GraficoTempo({ percursoSelecionado }) {
+export function GraficoAceleracao({ percursoSelecionado }) {
 
   const [graficoData, setGraficoData] = useState({
     labels: [],
     datasets: [
       {
-        label: 'Tempo',
+        label: 'em cm/s²',
         data: [],
         fill: false,
-        backgroundColor: 'rgba(0,0,192,0.2)',
-        borderColor: 'rgba(0,0,192,1)',
+        backgroundColor: 'rgba(192, 0, 0, 0.2)',
+        borderColor: '#d51111',
       },
     ],
   });
@@ -45,24 +45,38 @@ export function GraficoTempo({ percursoSelecionado }) {
           console.log('Telemetrias', telemetrias);
           
           // Atualize os dados do gráfico aqui
-          const newLabels = telemetrias.map(telemetria => telemetria.distTotal ); // Ajuste conforme a estrutura dos dados da API
-          const newData = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss')); // Ajuste conforme a estrutura dos dados da API
+          const newLabels = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
+          const newData = telemetrias.map(telemetria => telemetria.aceleracao);
 
           setGraficoData({
             labels: newLabels,
             datasets: [
               {
-                label: 'Tempo em mm:ss',
+                label: 'Aceleração',
                 data: newData,
                 fill: false,
-                backgroundColor: 'rgba(0,0,192,0.2)',
-                borderColor: 'rgba(0,0,192,1)',
+                backgroundColor: 'rgba(192, 0, 0, 0.2)',
+                borderColor: '#d51111',
               },
             ],
           });
         } catch (error) {
           console.error('Erro ao buscar os dados da API:', error);
         }
+      }
+      else {
+        setGraficoData({
+          labels: [],
+          datasets: [
+            {
+              label: 'Aceleração',
+              data: [],
+              fill: false,
+              backgroundColor: 'rgba(192, 0, 0, 0.2)',
+              borderColor: '#d51111',
+            },
+          ],
+        });
       }
     };
 
@@ -71,12 +85,12 @@ export function GraficoTempo({ percursoSelecionado }) {
 
   return (
     <Box>
-      <Text fontSize='xl' as='b'>Tempo pela distância</Text>
+      <Text fontSize='xl' as='b'>Gráfico da Aceleração</Text>
       <Line data={graficoData} options={options} />
     </Box>
   );
 }
 
-GraficoTempo.propTypes = {
+GraficoAceleracao.propTypes = {
   percursoSelecionado: PropTypes.object
 };
