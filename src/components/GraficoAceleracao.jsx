@@ -92,7 +92,7 @@ export function GraficoAceleracao({ percursoSelecionado, dados }) {
     };
 
     getTelemetria();
-  }, [percursoSelecionado]);
+  }, [percursoSelecionado, dados]);
 
   return (
     <Box>

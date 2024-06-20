@@ -91,7 +91,7 @@ export function GraficoDistancia({ percursoSelecionado, dados }) {
     };
 
     getTelemetria();
-  }, [percursoSelecionado]);
+  }, [percursoSelecionado, dados]);
 
   return (
     <Box>

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { postPercurso } from '../api/postPercurso';
 import { MyContext } from '../context/context';
 
-export function SideBar({percursos}){
+export function SideBar({percursos, dados}){
 
     const [corrida, setCorrida] = useState(false)
     const [percursoSelecionado, setPercursoSelecionado] = useState(null);
@@ -24,7 +24,9 @@ export function SideBar({percursos}){
         const idPercurso = parseInt(event.target.value);
         const percusoEscolhido = percursos.find(percurso => percurso.idPercurso === idPercurso);
         setPercursoSelecionado(percusoEscolhido);
-        setSharedState(percusoEscolhido);
+        if (percusoEscolhido !== undefined){
+            setSharedState(percusoEscolhido);
+        }
     };
 
     console.log(sharedState);
@@ -72,15 +74,20 @@ export function SideBar({percursos}){
         <Divider opacity={1}/>
         <Box p={5} display={'flex'} alignItems={'flex-start'} flexDirection={'column'}>
             <Text fontSize='xl'>Status Atual do Carrinho </Text>
-            <Box p={5} display={'flex'} alignItems={'flex-start'} flexDirection={'column'}>
-                <Text fontSize='lg'>Velocidade: 0 km/h</Text>
-                <Text fontSize='lg'>Aceleração: 0 cm/s²</Text>
+        {percursoSelecionado ?
+            <Box display={'flex'} alignItems={'flex-start'} flexDirection={'column'}>
+                <Text fontSize='lg' marginTop={'20px'}>Velocidade: {dados[dados.length - 1]?.velocidade} cm/s</Text>
+                <Text fontSize='lg'>Aceleração: {dados[dados.length - 1]?.aceleracao} cm/s²</Text>
             </Box>
+            :
+            <Text fontSize='lg' marginTop={'20px'}>Selecione um percurso para visualizar os dados</Text>
+        }
         </Box>
     </Box>
 )}
 
 SideBar.propTypes = {
-    percursos: PropTypes.arrayOf(PropTypes.object).isRequired
+    percursos: PropTypes.arrayOf(PropTypes.object).isRequired,
+    dados: PropTypes.arrayOf(PropTypes.object),
   };
   

@@ -3,7 +3,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { Box, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { format } from 'date-fns';
+import { differenceInMinutes, parseISO } from 'date-fns';
 
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -52,13 +52,14 @@ export function GraficoVelocidade({ percursoSelecionado, dados }) {
 
   useEffect(() => {
     const getTelemetria = async () => {
-      if (percursoSelecionado) {
-        try {
+      console.log(dados, percursoSelecionado)
+      if (percursoSelecionado && dados.length !== 0) {
           // console.log('Telemetrias', dados);
           // Atualize os dados do gráfico aqui
-          const newLabels = dados.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
-          const newData = dados.map(telemetria => telemetria.velocidade);
-
+          const primeiraData = parseISO(dados[0].data);
+          const newLabels = dados?.map(telemetria => differenceInMinutes(parseISO(telemetria.data), primeiraData));
+          const newData = dados?.map(telemetria => telemetria.velocidade);
+          console.log('datas', newLabels);
           setGraficoData({
             labels: newLabels,
             datasets: [
@@ -71,9 +72,6 @@ export function GraficoVelocidade({ percursoSelecionado, dados }) {
               },
             ],
           });
-        } catch (error) {
-          console.error('Erro ao buscar os dados da API:', error);
-        }
       }
       else {
         setGraficoData({

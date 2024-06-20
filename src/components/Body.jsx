@@ -13,7 +13,7 @@ import { MyContext } from "../context/context";
 export function Body() {
     const [percursos, setPercursos] = useState([]);
     const [percursoSelecionado, setPercursoSelecionado] = useState(null);
-    const [telemetria, setTelemetria] = useState(null);
+    const [telemetria, setTelemetria] = useState([]);
     const { sharedState } = useContext(MyContext);
 
     useEffect(() => {
@@ -28,6 +28,8 @@ export function Body() {
         }
 
         async function getTelemetria() {
+            console.log('teste', sharedState)
+            if (sharedState.idPercurso !== '')
                 try {
                     const telemetrias = await getPercursoDetalhes(sharedState.idPercurso);
                     console.log('Telemetrias', telemetrias);
@@ -35,11 +37,14 @@ export function Body() {
                 } catch (error) {
                     console.error('Erro ao buscar os dados da API:', error);
                 }
-
-        
         }
 
         mostrarPercursos();
+
+        // Descomentar para atualizar a telemetria a cada 5 segundos
+        // setInterval(() => {
+        //     getTelemetria();
+        // }, 5000);
         getTelemetria();
 
         setPercursoSelecionado(sharedState);
@@ -57,7 +62,7 @@ export function Body() {
             gap={4}
         >
             <GridItem rowSpan={3} colSpan={1} shadow='md' borderWidth='1px' marginLeft={'10px'} marginTop={'10px'}>
-                <SideBar percursos={percursos} />
+                <SideBar percursos={percursos} dados={telemetria}/>
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
                 <GraficoVelocidade percursoSelecionado={percursoSelecionado} dados={telemetria} />
