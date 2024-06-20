@@ -21,6 +21,10 @@ const options = {
   },
   scales: {
     x: {
+      title: {
+        display: true,
+        text: 'PosX',
+        },
       type: 'linear',
       position: 'bottom',
       ticks: {
@@ -28,6 +32,10 @@ const options = {
       },
     },
     y: {
+        title: {
+            display: true,
+            text: 'PosY',
+            },
       type: 'linear',
       position: 'left',
     },

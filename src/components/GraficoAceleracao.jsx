@@ -20,6 +20,20 @@ const options = {
       text: 'Acelaração do carrinho pelo tempo',
     },
   },
+  scales: {
+    x: {
+        title: {
+          display: true,
+          text: 'Tempo (min)',
+        },
+    },
+    y: {
+      title: {
+        display: true,
+        text: 'Aceleração (cm/s²)',
+      },
+    },
+  },
 };
 
 export function GraficoAceleracao({ percursoSelecionado }) {

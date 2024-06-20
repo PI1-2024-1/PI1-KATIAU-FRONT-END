@@ -20,6 +20,20 @@ const options = {
       text: 'Velocidade do carrinho pelo tempo',
     },
   },
+  scales: {
+    x: {
+        title: {
+          display: true,
+          text: 'Tempo (min)',
+        },
+    },
+    y: {
+      title: {
+        display: true,
+        text: 'Velocidade (cm/s)',
+      },
+    },
+  },
 };
 
 export function GraficoVelocidade({ percursoSelecionado }) {

@@ -20,6 +20,20 @@ const options = {
       text: 'Distância Percorrida pelo carrinho em função do tempo',
     },
   },
+  scales: {
+    x: {
+        title: {
+          display: true,
+          text: 'Tempo (min)',
+        },
+    },
+    y: {
+      title: {
+        display: true,
+        text: 'Distância (cm)',
+      },
+    },
+  },
 };
 
 export function GraficoDistancia({ percursoSelecionado }) {

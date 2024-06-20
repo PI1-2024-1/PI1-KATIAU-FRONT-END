@@ -21,6 +21,20 @@ const options = {
       text: 'Gráfico de Consumo energético',
     },
   },
+  scales: {
+    x: {
+        title: {
+          display: true,
+          text: 'Tempo (min)',
+        },
+    },
+    y: {
+      title: {
+        display: true,
+        text: 'Energia (w/h)',
+      },
+    },
+  },
 };
 
 export function GraficoConsumoEnergetico({ percursoSelecionado }) {
