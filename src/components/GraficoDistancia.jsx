@@ -3,7 +3,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { Box, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { getPercursoDetalhes } from '../api/getTelemetria';
 import { format } from 'date-fns';
 
 
@@ -36,7 +35,7 @@ const options = {
   },
 };
 
-export function GraficoDistancia({ percursoSelecionado }) {
+export function GraficoDistancia({ percursoSelecionado, dados }) {
 
   const [graficoData, setGraficoData] = useState({
     labels: [],
@@ -55,12 +54,10 @@ export function GraficoDistancia({ percursoSelecionado }) {
     const getTelemetria = async () => {
       if (percursoSelecionado) {
         try {
-          const telemetrias = await getPercursoDetalhes(percursoSelecionado.idPercurso);
-          console.log('Telemetrias', telemetrias);
-          
+          // console.log('dados', dados);
           // Atualize os dados do gráfico aqui
-          const newLabels = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss')); // Ajuste conforme a estrutura dos dados da API
-          const newData = telemetrias.map(telemetria => telemetria.distTotal); // Ajuste conforme a estrutura dos dados da API
+          const newLabels = dados.map(telemetria => format(new Date(telemetria.data), 'mm:ss')); // Ajuste conforme a estrutura dos dados da API
+          const newData = dados.map(telemetria => telemetria.distTotal); // Ajuste conforme a estrutura dos dados da API
 
           setGraficoData({
             labels: newLabels,
@@ -77,6 +74,19 @@ export function GraficoDistancia({ percursoSelecionado }) {
         } catch (error) {
           console.error('Erro ao buscar os dados da API:', error);
         }
+      } else {
+        setGraficoData({
+          labels: [],
+          datasets: [
+            {
+              label: 'Distância',
+              data: [],
+              fill: false,
+              backgroundColor: 'rgba(0,0,192,0.2)',
+              borderColor: 'rgba(0,0,192,1)',
+            },
+          ],
+        });
       }
     };
 
@@ -92,5 +102,6 @@ export function GraficoDistancia({ percursoSelecionado }) {
 }
 
 GraficoDistancia.propTypes = {
-  percursoSelecionado: PropTypes.object
+  percursoSelecionado: PropTypes.object,
+  dados: PropTypes.arrayOf(PropTypes.object),
 };

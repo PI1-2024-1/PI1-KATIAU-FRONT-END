@@ -7,11 +7,13 @@ import { GraficoAceleracao } from "./GraficoAceleracao";
 import { GraficoConsumoEnergetico } from "./GraficoConsumoEnergetico";
 import { getPercursos } from "../api/getPercursos";
 import { useEffect, useState, useContext } from "react";
+import { getPercursoDetalhes } from "../api/getTelemetria";
 import { MyContext } from "../context/context";
 
 export function Body() {
     const [percursos, setPercursos] = useState([]);
     const [percursoSelecionado, setPercursoSelecionado] = useState(null);
+    const [telemetria, setTelemetria] = useState(null);
     const { sharedState } = useContext(MyContext);
 
     useEffect(() => {
@@ -24,7 +26,21 @@ export function Body() {
                 throw error;
             }
         }
+
+        async function getTelemetria() {
+                try {
+                    const telemetrias = await getPercursoDetalhes(sharedState.idPercurso);
+                    console.log('Telemetrias', telemetrias);
+                    setTelemetria(telemetrias);
+                } catch (error) {
+                    console.error('Erro ao buscar os dados da API:', error);
+                }
+
+        
+        }
+
         mostrarPercursos();
+        getTelemetria();
 
         setPercursoSelecionado(sharedState);
 
@@ -44,19 +60,19 @@ export function Body() {
                 <SideBar percursos={percursos} />
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
-                <GraficoVelocidade percursoSelecionado={percursoSelecionado} />
+                <GraficoVelocidade percursoSelecionado={percursoSelecionado} dados={telemetria} />
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
-                <GraficoAceleracao percursoSelecionado={percursoSelecionado} />             
+                <GraficoAceleracao percursoSelecionado={percursoSelecionado} dados={telemetria} />             
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
-              <GraficoTrajetoria percursoSelecionado={percursoSelecionado} />
+              <GraficoTrajetoria percursoSelecionado={percursoSelecionado} dados={telemetria} />
             </GridItem>
             <GridItem colSpan={2} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'}>
-              <GraficoDistancia percursoSelecionado={percursoSelecionado} />   
+              <GraficoDistancia percursoSelecionado={percursoSelecionado} dados={telemetria} />   
             </GridItem>
             <GridItem  colSpan={4} shadow='md' borderWidth='1px' marginTop={'10px'} marginRight={'10px'} marginBottom={'10px'}>
-                <GraficoConsumoEnergetico percursoSelecionado={percursoSelecionado} />
+                <GraficoConsumoEnergetico percursoSelecionado={percursoSelecionado} dados={telemetria} />
             </GridItem>
         </Grid>
     );

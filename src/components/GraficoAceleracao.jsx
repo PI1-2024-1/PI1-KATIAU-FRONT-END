@@ -3,7 +3,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { Box, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { getPercursoDetalhes } from '../api/getTelemetria';
 import { format } from 'date-fns';
 
 
@@ -36,7 +35,7 @@ const options = {
   },
 };
 
-export function GraficoAceleracao({ percursoSelecionado }) {
+export function GraficoAceleracao({ percursoSelecionado, dados }) {
 
   const [graficoData, setGraficoData] = useState({
     labels: [],
@@ -55,12 +54,10 @@ export function GraficoAceleracao({ percursoSelecionado }) {
     const getTelemetria = async () => {
       if (percursoSelecionado) {
         try {
-          const telemetrias = await getPercursoDetalhes(percursoSelecionado.idPercurso);
-          console.log('Telemetrias', telemetrias);
-          
+          // console.log('dados', dados);
           // Atualize os dados do gráfico aqui
-          const newLabels = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
-          const newData = telemetrias.map(telemetria => telemetria.aceleracao);
+          const newLabels = dados.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
+          const newData = dados.map(telemetria => telemetria.aceleracao);
 
           setGraficoData({
             labels: newLabels,
@@ -106,5 +103,6 @@ export function GraficoAceleracao({ percursoSelecionado }) {
 }
 
 GraficoAceleracao.propTypes = {
-  percursoSelecionado: PropTypes.object
+  percursoSelecionado: PropTypes.object,
+  dados: PropTypes.arrayOf(PropTypes.object),
 };

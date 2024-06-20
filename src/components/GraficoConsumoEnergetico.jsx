@@ -1,9 +1,8 @@
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
-import { Box, Text } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { getPercursoDetalhes } from '../api/getTelemetria';
 import { format } from 'date-fns';
 
 
@@ -37,7 +36,7 @@ const options = {
   },
 };
 
-export function GraficoConsumoEnergetico({ percursoSelecionado }) {
+export function GraficoConsumoEnergetico({ percursoSelecionado, dados }) {
 
   const [graficoData, setGraficoData] = useState({
     labels: [],
@@ -56,12 +55,10 @@ export function GraficoConsumoEnergetico({ percursoSelecionado }) {
     const getTelemetria = async () => {
       if (percursoSelecionado) {
         try {
-          const telemetrias = await getPercursoDetalhes(percursoSelecionado.idPercurso);
-          console.log('Telemetrias', telemetrias);
-          
+          // console.log('dados', dados);
           // Atualize os dados do gráfico aqui
-          const newLabels = telemetrias.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
-          const newData = telemetrias.map(telemetria => telemetria.energia);
+          const newLabels = dados.map(telemetria => format(new Date(telemetria.data), 'mm:ss'));
+          const newData = dados.map(telemetria => telemetria.energia);
 
           setGraficoData({
             labels: newLabels,
@@ -96,7 +93,7 @@ export function GraficoConsumoEnergetico({ percursoSelecionado }) {
     };
 
     getTelemetria();
-  }, [percursoSelecionado]);
+  }, [percursoSelecionado, dados]);
 
   return (
     <Box width="100%" height="400px">
@@ -107,5 +104,6 @@ export function GraficoConsumoEnergetico({ percursoSelecionado }) {
 }
 
 GraficoConsumoEnergetico.propTypes = {
-  percursoSelecionado: PropTypes.object
+  percursoSelecionado: PropTypes.object,
+  dados: PropTypes.arrayOf(PropTypes.object)
 };

@@ -3,7 +3,6 @@ import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, Title, Tooltip, Legend, LinearScale } from 'chart.js';
 import { Box, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import { getPercursoDetalhes } from '../api/getTelemetria';
 
 ChartJS.register(Title, Tooltip, Legend, LinearScale);
 
@@ -56,7 +55,7 @@ const options = {
 //   ];
 
 // Componente de gráfico de percurso
-export function GraficoTrajetoria({ percursoSelecionado }) {
+export function GraficoTrajetoria({ percursoSelecionado, dados }) {
   const [graficoData, setGraficoData] = useState({
     datasets: [
       {
@@ -75,10 +74,8 @@ export function GraficoTrajetoria({ percursoSelecionado }) {
     const getTelemetria = async () => {
       if (percursoSelecionado) {
         try {
-          const telemetrias = await getPercursoDetalhes(percursoSelecionado.idPercurso);
-          console.log('Telemetrias', telemetrias);
-
-          const newData = telemetrias.map(telemetria => ({ x: telemetria.posX, y: telemetria.posY }));
+          // console.log('dados', dados);
+          const newData = dados.map(telemetria => ({ x: telemetria.posX, y: telemetria.posY }));
 
           setGraficoData({
             datasets: [
@@ -114,7 +111,7 @@ export function GraficoTrajetoria({ percursoSelecionado }) {
     };
 
     getTelemetria();
-  }, [percursoSelecionado]);
+  }, [percursoSelecionado, dados]);
 
   return (
     <Box>
@@ -125,5 +122,6 @@ export function GraficoTrajetoria({ percursoSelecionado }) {
 }
 
 GraficoTrajetoria.propTypes = {
-  percursoSelecionado: PropTypes.object
+  percursoSelecionado: PropTypes.object,
+  dados: PropTypes.arrayOf(PropTypes.object),
 };
