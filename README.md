@@ -5,7 +5,7 @@ Repositório do front-end do projeto Katiu de P1
 ## Como rodar
 
 
-1° passo instalar as dependências:
+1° Passo instalar as dependências:
 
 ```
 npm install
@@ -16,6 +16,25 @@ npm install
 ```
 npm run dev
 ```
+
+## Como rodar os testes
+
+1° Passo verificar as dependências:
+```
+npm install
+```
+2° Executar o comando:
+
+```
+npm run test
+```
+
+ou para uma interface web de cobertura
+
+```
+npm run coverage
+```
+
 
 ## Requisitos
 
