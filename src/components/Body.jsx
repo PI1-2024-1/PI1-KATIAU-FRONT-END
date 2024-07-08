@@ -15,6 +15,7 @@ export function Body() {
     const [percursoSelecionado, setPercursoSelecionado] = useState(null);
     const [telemetria, setTelemetria] = useState([]);
     const { sharedState } = useContext(MyContext);
+    const { control } = useContext(MyContext);
 
     useEffect(() => {
         async function mostrarPercursos() {
@@ -41,16 +42,20 @@ export function Body() {
 
         mostrarPercursos();
 
+        if(control){
+            setInterval(() => {
+                getTelemetria();
+            }, 1000);
+        } else {
+            getTelemetria();
+        }
         // Descomentar para atualizar a telemetria a cada 5 segundos
-        // setInterval(() => {
-        //     getTelemetria();
-        // }, 5000);
-        getTelemetria();
+        // getTelemetria();
 
         setPercursoSelecionado(sharedState);
 
 
-    }, [sharedState]);
+    }, [sharedState, control]);
 
     console.log(percursoSelecionado);
 

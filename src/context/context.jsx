@@ -11,8 +11,10 @@ const MyProvider = ({ children }) => {
       }
     );
 
+    const [control, setControl] = useState(false)
+
     return (
-        <MyContext.Provider value={{ sharedState, setSharedState }}>
+        <MyContext.Provider value={{ sharedState, setSharedState, control, setControl }}>
             {children}
         </MyContext.Provider>
     );

@@ -9,14 +9,17 @@ export function SideBar({percursos, dados}){
     const [corrida, setCorrida] = useState(false)
     const [percursoSelecionado, setPercursoSelecionado] = useState(null);
     const { sharedState, setSharedState } = useContext(MyContext);
+    const { setControl } = useContext(MyContext);
 
     const inicializarCorrida = async () => {
         await postPercurso();
         setCorrida(prevPercurso => !prevPercurso);
+        setControl(true)
     };
 
     const finalizarCorrida = async () => {
         // await postPercurso();
+        setControl(false)
         setCorrida(prevPercurso => !prevPercurso);
     };
 
