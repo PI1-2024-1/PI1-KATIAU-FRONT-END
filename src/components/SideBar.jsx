@@ -8,7 +8,7 @@ export function SideBar({percursos, dados}){
 
     const [corrida, setCorrida] = useState(false)
     const [percursoSelecionado, setPercursoSelecionado] = useState(null);
-    const { sharedState, setSharedState } = useContext(MyContext);
+    const { setSharedState } = useContext(MyContext);
     const { setControl } = useContext(MyContext);
 
     const inicializarCorrida = async () => {
@@ -27,12 +27,11 @@ export function SideBar({percursos, dados}){
         const idPercurso = parseInt(event.target.value);
         const percusoEscolhido = percursos.find(percurso => percurso.idPercurso === idPercurso);
         setPercursoSelecionado(percusoEscolhido);
+        console.log('teste', percusoEscolhido);
         if (percusoEscolhido !== undefined){
             setSharedState(percusoEscolhido);
         }
     };
-
-    console.log(sharedState);
 
     return(
     <Box>

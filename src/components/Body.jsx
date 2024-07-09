@@ -27,9 +27,7 @@ export function Body() {
                 throw error;
             }
         }
-
         async function getTelemetria() {
-            console.log('teste', sharedState)
             if (sharedState.idPercurso !== '')
                 try {
                     const telemetrias = await getPercursoDetalhes(sharedState.idPercurso);
@@ -41,19 +39,17 @@ export function Body() {
         }
 
         mostrarPercursos();
+        
+        setPercursoSelecionado(sharedState);
 
         if(control){
-            setInterval(() => {
+            const intervalo = setInterval(() => {
                 getTelemetria();
             }, 1000);
+            return () => clearInterval(intervalo);
         } else {
             getTelemetria();
         }
-        // Descomentar para atualizar a telemetria a cada 5 segundos
-        // getTelemetria();
-
-        setPercursoSelecionado(sharedState);
-
 
     }, [sharedState, control]);
 
