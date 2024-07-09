@@ -57,9 +57,13 @@ export function GraficoVelocidade({ percursoSelecionado, dados }) {
           // console.log('Telemetrias', dados);
           // Atualize os dados do gráfico aqui
           const primeiraData = parseISO(dados[0].data);
-          const newLabels = dados?.map(telemetria => differenceInMinutes(parseISO(telemetria.data), primeiraData));
+          // const newLabels = dados.map(telemetria => differenceInMinutes(format(new Date(telemetria.data), 'mm:ss'), primeiraData));
+          const newLabels = dados?.map(telemetria => {
+            const dataAtual = parseISO(telemetria.data);
+            const minutosDesdeInicio = differenceInMinutes(dataAtual, primeiraData);
+            return `(${minutosDesdeInicio})`;
+        });
           const newData = dados?.map(telemetria => telemetria.velocidade);
-          console.log('datas', newLabels);
           setGraficoData({
             labels: newLabels,
             datasets: [

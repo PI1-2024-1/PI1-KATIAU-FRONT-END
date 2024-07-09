@@ -3,7 +3,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement
 import { Box, Text } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
-import { format } from 'date-fns';
+import { parseISO, differenceInMinutes } from 'date-fns';
 
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
@@ -56,7 +56,13 @@ export function GraficoDistancia({ percursoSelecionado, dados }) {
         try {
           // console.log('dados', dados);
           // Atualize os dados do gráfico aqui
-          const newLabels = dados.map(telemetria => format(new Date(telemetria.data), 'mm:ss')); // Ajuste conforme a estrutura dos dados da API
+          const primeiraData = parseISO(dados[0].data);
+          // const newLabels = dados.map(telemetria => differenceInMinutes(format(new Date(telemetria.data), 'mm:ss'), primeiraData));
+          const newLabels = dados?.map(telemetria => {
+            const dataAtual = parseISO(telemetria.data);
+            const minutosDesdeInicio = differenceInMinutes(dataAtual, primeiraData);
+            return `(${minutosDesdeInicio})`;
+        }); // Ajuste conforme a estrutura dos dados da API
           const newData = dados.map(telemetria => telemetria.distTotal); // Ajuste conforme a estrutura dos dados da API
 
           setGraficoData({
